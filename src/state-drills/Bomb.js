@@ -3,49 +3,38 @@ import React, {Component} from 'react';
 
 class Bomb extends Component{
     state = {
-        count:0,
-        message:''
+        count:0
     };
     
-        textMessage=()=>{
-        if(this.state.count %2 === 0){
-            this.setState({message:'Tick!'})
-        }else{
-            this.setState({message:'Tock!'})
-        }
-        if(this.state.count >= 8){
-            this.setState({message:'Boom!'})
-            
-        }
-    }
-   
-    render(){
-        console.log(this.state.count)
-        return(
-            <div>
-                <p>
-                   {this.state.message}
-                </p>
-            </div>
-        )
-    }
-
    componentDidMount(){
-    let intervalId = setInterval(this.textMessage,1000)
-    let currentCount = this.state.count +1;
-    this.setState({ count: currentCount });
-    console.log('DidMount')
+    this.intervalId = setInterval(() => {
+        let currentCount = this.state.count +1;
+        this.setState({ count: currentCount });
+    },1000)
    }
 
    componentWillUnmount(){
-    clearInterval(this.state.intervalId)
-    console.log('DidwillunMount')
+    clearInterval(this.intervalId)
    }
-//   timer=()=>{
-//     // setState method is used to update the state
-//     this.setState();
-//  }
-
+   
+   render(){
+       let message = ''
+       if(this.state.count %2 === 0){
+            message = 'Tick!'
+        }else{
+             message = 'Tock!'
+            }
+        if(this.state.count >= 8){
+            message = 'Boom!'
+        }
+    return(
+        <div>
+            <p>
+               {message}
+            </p>
+        </div>
+    )
+}
    
 }
 
